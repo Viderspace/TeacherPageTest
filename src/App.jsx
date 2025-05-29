@@ -1,4 +1,8 @@
 // import { useState } from 'react';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';  // add at the top
+import pdfWorker from 'pdfjs-dist/legacy/build/pdf.worker.entry';
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+
 import { useState, useEffect } from 'react';
 function App() {
   const [messages, setMessages] = useState([
@@ -69,6 +73,47 @@ const reply = data.reply || "Sorry, something went wrong.";
     setLoading(false);
   };
 
+  const handlePDFUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file || file.type !== 'application/pdf') return;
+
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const typedarray = new Uint8Array(this.result);
+    const pdf = await pdfjsLib.getDocument(typedarray).promise;
+
+    let fullText = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const strings = content.items.map((item) => item.str).join(' ');
+      fullText += strings + '\n\n';
+    }
+
+    // Inject PDF text as if teacher typed it
+    handleSendPDF(fullText);
+  };
+
+  reader.readAsArrayBuffer(file);
+};
+
+const handleSendPDF = async (pdfText) => {
+  const newMessages = [...messages, { role: 'user', content: pdfText }];
+  setMessages(newMessages);
+  setLoading(true);
+
+  const res = await fetch('https://teacher-backend-production.up.railway.app/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: newMessages })
+  });
+
+  const data = await res.json();
+  const reply = data.reply || "Sorry, something went wrong.";
+  setMessages([...newMessages, { role: 'assistant', content: reply }]);
+  setLoading(false);
+};
+
   return (
     <div className="max-w-2xl mx-auto p-6 font-sans">
       <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
@@ -90,6 +135,10 @@ const reply = data.reply || "Sorry, something went wrong.";
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         />
+        <div className="mt-2">
+          <label className="block mb-1 font-medium">📄 Upload PDF lesson plan</label>
+          <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+        </div>
         <button
           onClick={handleSend}
           disabled={loading}
