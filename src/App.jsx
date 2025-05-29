@@ -167,22 +167,7 @@ const handleSendPDF = async (pdfText) => {
   setLoading(false);
 };
 
-// const handleSendPDF = async (pdfText) => {
-//   const newMessages = [...messages, { role: 'user', content: pdfText }];
-//   setMessages(newMessages);
-//   setLoading(true);
-
-//   const res = await fetch('https://teacher-backend-production.up.railway.app/ask', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ messages: newMessages })
-//   });
-
-//   const data = await res.json();
-//   const reply = data.reply || "Sorry, something went wrong.";
-//   setMessages([...newMessages, { role: 'assistant', content: reply }]);
-//   setLoading(false);
-// };
+// 
 
   return (
     <div className="max-w-2xl mx-auto p-6 font-sans">
