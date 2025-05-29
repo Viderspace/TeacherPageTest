@@ -53,7 +53,7 @@ function App() {
   const [messages, setMessages] = useState([
     { role: "system", 
   content: `
-  You are a helpful, efficient, and concise assistant for a teacher. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
+  You are a helpful, efficient, and concise assistant for a teacher speaking Hebrew. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
 
   Your interaction should follow this flow:
   
@@ -171,7 +171,7 @@ const handleSendPDF = async (pdfText) => {
 
 return (
   <div className="max-w-2xl mx-auto p-6 font-sans">
-    <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
+    <h1 className="text-2xl font-bold mb-4">👩‍🏫 מורה מלווה</h1>
     <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
       <pre className="whitespace-pre-wrap text-left">
         {messages
