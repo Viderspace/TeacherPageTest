@@ -178,7 +178,7 @@ const sessionId = prompt("Give this lesson a short name (e.g., pythagorean):", "
   await fetch('https://teacher-backend-production.up.railway.app/set-tutor-prompt', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ session: sessionId, promptText })
+    body: JSON.stringify({ session: sessionId, prompt: promptText })
   });
 
   const link = `https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(sessionId)}`;
