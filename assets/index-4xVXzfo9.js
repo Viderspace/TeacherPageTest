@@ -137,7 +137,7 @@ ${I}
 ${qe.filter(t=>t.role!=="system"&&t.role!=="assistant").map(t=>t.content).join(`
 `)}
 
-Adapt your teaching style to the student's needs.`,X=prompt("Give this lesson a short name (e.g., pythagorean):","latest")||"latest";await fetch("https://teacher-backend-production.up.railway.app/set-tutor-prompt",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({session:X,promptText:E})});const e=`https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(X)}`;alert(`✅ Tutor prompt published!
+Adapt your teaching style to the student's needs.`,X=prompt("Give this lesson a short name (e.g., pythagorean):","latest")||"latest";await fetch("https://teacher-backend-production.up.railway.app/set-tutor-prompt",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({session:X,prompt:E})});const e=`https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(X)}`;alert(`✅ Tutor prompt published!
 
 Share this link with your students:
 ${e}`)};return jsxRuntimeExports.jsxs("div",{className:"max-w-2xl mx-auto p-6 font-sans",children:[jsxRuntimeExports.jsx("h1",{className:"text-2xl font-bold mb-4",children:"👩‍🏫 מורה מלווה"}),jsxRuntimeExports.jsx("div",{className:"h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white",children:jsxRuntimeExports.jsx("pre",{className:"whitespace-pre-wrap text-left",children:qe.filter(E=>E.role==="user"||E.role==="assistant").map(E=>E.content).join(`
