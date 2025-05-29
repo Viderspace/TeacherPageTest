@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 function App() {
   const [messages, setMessages] = useState([
     { role: "system", 
