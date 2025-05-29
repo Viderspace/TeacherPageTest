@@ -165,22 +165,24 @@ function App() {
     setLoading(false);
   };
 
-  const publishTutorPrompt = async () => {
-    const prompt = `You are a helpful, efficient, and concise AI tutor. Your goal is to help the student understand the following material:
+const publishTutorPrompt = async () => {
+  const sessionId = prompt("Give this lesson a short name (e.g., pythagorean):", "latest") || "latest";
 
-${/* Generate a concise system prompt from messages */ messages.filter(m => m.role !== 'system' && m.role !== 'assistant').map(m => m.content).join('\n')}
+  const prompt = `You are a helpful, efficient, and concise AI tutor. Your goal is to help the student understand the following material:
+
+${messages.filter(m => m.role !== 'system' && m.role !== 'assistant').map(m => m.content).join('\n')}
 
 Adapt your teaching style to the student's needs.`;
 
-    await fetch('https://teacher-backend-production.up.railway.app/set-tutor-prompt', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
+  await fetch('https://teacher-backend-production.up.railway.app/set-tutor-prompt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session: sessionId, prompt })
+  });
 
-    alert("✅ Tutor prompt published!");
-  };
-
+  const link = `https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(sessionId)}`;
+  alert(`✅ Tutor prompt published!\n\nShare this link with your students:\n${link}`);
+};
   // 
 
   return (
