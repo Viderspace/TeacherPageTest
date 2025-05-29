@@ -225,7 +225,7 @@ If the student seems unsure or passive, guide them with clear, supportive sugges
 
   return (
     <div className="max-w-2xl mx-auto p-6 font-sans">
-      <h1 className="text-2xl font-bold mb-4">👩‍🏫  מורה מלווה מורה</h1>
+      <h1 className="text-2xl font-bold mb-4">👩‍🏫  מורה מלווה למורה</h1>
       <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
         <pre className="whitespace-pre-wrap text-left">
           {messages
