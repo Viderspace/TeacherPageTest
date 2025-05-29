@@ -33,9 +33,20 @@ const handlePDFUpload = async (e) => {
       text += pageText + '\n';
     }
 
-    // Send the extracted text as if the teacher typed it
-    const newMessages = [...messages, { role: 'user', content: text }];
-    setMessages(newMessages);
+    // 👇 Add PDF content as hidden system message (not displayed in chat UI)
+    const hiddenPdfMessage = {
+      role: 'system',
+      content: `The teacher uploaded this lesson material:\n\n${text}`
+    };
+
+    // 👇 Add a user message that will appear in the chat
+    const userPrompt = {
+      role: 'user',
+      content: 'Please review the uploaded lesson and assist.'
+    };
+
+    const newMessages = [...messages, hiddenPdfMessage, userPrompt];
+    setMessages([...messages, userPrompt]); // Only show the visible message in UI
     setLoading(true);
 
     const res = await fetch('https://teacher-backend-production.up.railway.app/ask', {
@@ -46,13 +57,12 @@ const handlePDFUpload = async (e) => {
 
     const data = await res.json();
     const reply = data.reply || 'Sorry, something went wrong.';
-    setMessages([...newMessages, { role: 'assistant', content: reply }]);
+    setMessages([...messages, userPrompt, { role: 'assistant', content: reply }]);
     setLoading(false);
   };
 
   fileReader.readAsArrayBuffer(file);
 };
-
 
 
 
