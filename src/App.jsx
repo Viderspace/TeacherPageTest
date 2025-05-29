@@ -1,9 +1,58 @@
-// import { useState } from 'react';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';  // add at the top
-import pdfWorker from 'pdfjs-dist/legacy/build/pdf.worker.entry';
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// import * as pdfjsLib from 'pdfjs-dist';
+// import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+
+import * as pdfjsLib from 'pdfjs-dist/build/pdf';
+import 'pdfjs-dist/build/pdf.worker.entry';
+
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 import { useState, useEffect } from 'react';
+
+
+
+
+const handlePDFUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const fileReader = new FileReader();
+  fileReader.onload = async function () {
+    const typedArray = new Uint8Array(this.result);
+    const pdf = await pdfjsLib.getDocument(typedArray).promise;
+
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map((item) => item.str).join(' ');
+      text += pageText + '\n';
+    }
+
+    // Send the extracted text as if the teacher typed it
+    const newMessages = [...messages, { role: 'user', content: text }];
+    setMessages(newMessages);
+    setLoading(true);
+
+    const res = await fetch('https://teacher-backend-production.up.railway.app/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: newMessages })
+    });
+
+    const data = await res.json();
+    const reply = data.reply || 'Sorry, something went wrong.';
+    setMessages([...newMessages, { role: 'assistant', content: reply }]);
+    setLoading(false);
+  };
+
+  fileReader.readAsArrayBuffer(file);
+};
+
+
+
+
+
 function App() {
   const [messages, setMessages] = useState([
     { role: "system", 
@@ -135,8 +184,8 @@ const handleSendPDF = async (pdfText) => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         />
-        <div className="mt-2">
-          <label className="block mb-1 font-medium">📄 Upload PDF lesson plan</label>
+        <div className="mb-4">
+          <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
           <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
         </div>
         <button
