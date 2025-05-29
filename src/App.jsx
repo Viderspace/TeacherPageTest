@@ -171,7 +171,8 @@ const handleSendPDF = async (pdfText) => {
     <div className="max-w-2xl mx-auto p-6 font-sans">
       <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
       <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
-        {messages.filter(m => m.role !== 'system').map((msg, i) => (
+      {messages.filter(m => m.role === 'user' || m.role === 'assistant').map((msg, i) => (
+        // {messages.filter(m => m.role !== 'system').map((msg, i) => (
           <div
             key={i}
             className={`mb-2 p-2 rounded ${msg.role === 'user' ? 'bg-blue-100 self-end text-right' : 'bg-gray-100 self-start text-left'}`}
