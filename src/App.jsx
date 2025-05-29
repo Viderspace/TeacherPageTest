@@ -25,7 +25,7 @@ Keep all responses **short, practical, and easy to scan** — avoid long explana
 If the teacher is unsure what to include, gently guide them by suggesting possibilities.
 ` 
 },
-    { role: 'assistant', content: 'Hello! What lesson would you like to plan today?' }
+    { role: 'assistant', content: 'Hello! What would you like to plan today for class?' }
   ]);
   
   const [input, setInput] = useState('');
