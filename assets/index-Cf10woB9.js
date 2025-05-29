@@ -132,12 +132,30 @@ ${I}
   If the teacher seems unsure, gently guide them by suggesting helpful options.
 `}]),[Ye,pe]=reactExports.useState(""),[De,Ke]=reactExports.useState(!1);reactExports.useEffect(()=>{const T=async()=>{const e=await(await fetch("https://teacher-backend-production.up.railway.app/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:qe})})).json();Ae([...qe,{role:"assistant",content:e.reply}])};qe.length===1&&T()},[]);const Re=async()=>{if(!Ye.trim())return;const T=[...qe,{role:"user",content:Ye}];Ae(T),pe(""),Ke(!0);const t=(await(await fetch("https://teacher-backend-production.up.railway.app/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:T})})).json()).reply||"Sorry, something went wrong.";Ae([...T,{role:"assistant",content:t}]),Ke(!1)},j=async T=>{const X=T.target.files[0];if(!X||X.type!=="application/pdf")return;const e=new FileReader;e.onload=async function(){const t=new Uint8Array(this.result),g=await pdfExports.getDocument(t).promise;let Y="";for(let q=1;q<=g.numPages;q++){const b=(await(await g.getPage(q)).getTextContent()).items.map(y=>y.str).join(" ");Y+=b+`
 
-`}re(Y)},e.readAsArrayBuffer(X)},re=async T=>{const X=[...qe,{role:"user",content:T}];Ae(X),Ke(!0);const e=[...qe,{role:"user",content:T}],Y=(await(await fetch("https://teacher-backend-production.up.railway.app/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:e})})).json()).reply||"Sorry, something went wrong.";Ae([...X,{role:"assistant",content:Y}]),Ke(!1)},i=async()=>{let T=prompt("Give this lesson a short name (e.g., pythagorean):","latest");if(!T){alert("❌ A session name is required to publish a tutor.");return}const e=`You are a helpful, efficient, and concise AI tutor. Your goal is to help the student understand the following material:
+`}re(Y)},e.readAsArrayBuffer(X)},re=async T=>{const X=[...qe,{role:"user",content:T}];Ae(X),Ke(!0);const e=[...qe,{role:"user",content:T}],Y=(await(await fetch("https://teacher-backend-production.up.railway.app/ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:e})})).json()).reply||"Sorry, something went wrong.";Ae([...X,{role:"assistant",content:Y}]),Ke(!1)},i=async()=>{let T=prompt("Give this lesson a short name (e.g., pythagorean):","latest");if(!T){alert("❌ A session name is required to publish a tutor.");return}const e=`You are a helpful, efficient, and concise AI tutor. Your sole goal is to help the student understand and learn${qe.filter(t=>t.role==="user").map(t=>t.content).join(`
+`)}. You should adapt your teaching style to fit the student's specific needs and preferences, which will be included in the context.
 
-${qe.filter(t=>t.role==="user").map(t=>t.content).join(`
-`)}
+Your interaction should follow this flow:
 
-Adapt your teaching style to the student's needs.`;try{if((await(await fetch("https://teacher-backend-production.up.railway.app/set-tutor-prompt",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({session:T,prompt:e})})).json()).status!=="ok")throw new Error("Failed to save tutor prompt");const Y=`https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(T)}`;alert(`✅ Tutor prompt published!
+1.⁠ ⁠*Begin* by reviewing and acknowledging the material provided by the teacher. This may include the student's grade level, learning needs, and specific lesson goals.
+
+2.⁠ ⁠Once you understand the material:
+   - Begin an interactive conversation with the student to teach the topic. Gently guide the student through the material, ensuring they understand each part before moving on.
+   - Adapt your method based on the student’s needs:
+     - If the student is dyslexic or prefers audio, read the material out loud.
+     - If the student has concentration challenges, suggest short, engaging videos (or note that such videos can help).
+     - Otherwise, provide clear, written explanations and examples.
+
+3.⁠ ⁠The lesson continues until the student demonstrates understanding of all required examples or key topics specified by the teacher by answering 5 questions about the topic correctly.
+
+4.⁠ ⁠As you teach:
+   - Encourage the student and highlight their progress.
+   - Ask questions or give short exercises to confirm understanding.
+   - Gently re-explain or offer alternatives if the student seems confused.
+
+Keep all responses *short, practical, and easy to scan* — avoid long explanations unless the student asks for more detail.
+
+If the student seems unsure or passive, guide them with clear, supportive suggestions.`;try{if((await(await fetch("https://teacher-backend-production.up.railway.app/set-tutor-prompt",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({session:T,prompt:e})})).json()).status!=="ok")throw new Error("Failed to save tutor prompt");const Y=`https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(T)}`;alert(`✅ Tutor prompt published!
 
 Share this link with your students:
 ${Y}`)}catch(t){console.error(t),alert("❌ Failed to publish tutor prompt. Please try again.")}};return jsxRuntimeExports.jsxs("div",{className:"max-w-2xl mx-auto p-6 font-sans",children:[jsxRuntimeExports.jsx("h1",{className:"text-2xl font-bold mb-4",children:"👩‍🏫 מורה מלווה"}),jsxRuntimeExports.jsx("div",{className:"h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white",children:jsxRuntimeExports.jsx("pre",{className:"whitespace-pre-wrap text-left",children:qe.filter(T=>T.role==="user"||T.role==="assistant").map(T=>T.content).join(`
