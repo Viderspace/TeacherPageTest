@@ -51,7 +51,7 @@ function App() {
     {
       role: "system",
       content: `
-  You are a helpful, efficient, and concise assistant for a teacher. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
+  You are a helpful, efficient, and concise assistant for a Hebrew speaking teacher. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
 
   Your interaction should follow this flow:
   
@@ -179,7 +179,7 @@ function App() {
     .join('\n');
 
   // const promptText = `You are a helpful, efficient, and concise AI tutor. Your goal is to help the student understand the following material:\n\n${teacherContent}\n\nAdapt your teaching style to the student's needs.`;
-  const promptText = `You are a helpful, efficient, and concise AI tutor. Your sole goal is to help the student understand and learn${teacherContent}. You should adapt your teaching style to fit the student's specific needs and preferences, which will be included in the context.
+  const promptText = `You are a helpful, efficient, and concise AI tutor for a Hewbrew speaking student. Your sole goal is to help the student understand and learn${teacherContent}. You should adapt your teaching style to fit the student's specific needs and preferences, which will be included in the context.
 
 Your interaction should follow this flow:
 
@@ -225,7 +225,7 @@ If the student seems unsure or passive, guide them with clear, supportive sugges
 
   return (
     <div className="max-w-2xl mx-auto p-6 font-sans">
-      <h1 className="text-2xl font-bold mb-4">👩‍🏫 מורה מלווה</h1>
+      <h1 className="text-2xl font-bold mb-4">👩‍🏫  מורה מלווה מורה</h1>
       <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
         <pre className="whitespace-pre-wrap text-left">
           {messages
@@ -246,15 +246,15 @@ If the student seems unsure or passive, guide them with clear, supportive sugges
           <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
           <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
         </div>
-        <button
+        {/* <button
           onClick={handleSend}
           disabled={loading}
           className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         >
           {loading ? '...' : 'Send'}
-        </button>
+        </button> */}
         <button onClick={publishTutorPrompt} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4">
-          Publish Tutor
+          יאללה בלאגן
         </button>
       </div>
     </div>
