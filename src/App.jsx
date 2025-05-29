@@ -169,41 +169,40 @@ const handleSendPDF = async (pdfText) => {
 
 // 
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 font-sans">
-      <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
-      <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
-        {messages.filter(m => m.role !== 'system').map((msg, i) => (
-          <div
-            key={i}
-            className={`mb-2 p-2 rounded ${msg.role === 'user' ? 'bg-blue-100 self-end text-right' : 'bg-gray-100 self-start text-left'}`}
-          >
-            {msg.content}
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-2">
-        <input
-          className="flex-1 border p-2 rounded"
-          value={input}
-          placeholder="Type your message..."
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <div className="mb-4">
-          <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
-          <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
-        </div>
-        <button
-          onClick={handleSend}
-          disabled={loading}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          {loading ? '...' : 'Send'}
-        </button>
-      </div>
+return (
+  <div className="max-w-2xl mx-auto p-6 font-sans">
+    <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
+    <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
+      <pre className="whitespace-pre-wrap text-left">
+        {messages
+          .filter(m => m.role === 'user' || m.role === 'assistant')
+          .map(m => m.content)
+          .join('\n\n')}
+      </pre>
     </div>
-  );
+    <div className="flex gap-2">
+      <input
+        className="flex-1 border p-2 rounded"
+        value={input}
+        placeholder="Type your message..."
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+      />
+      <div className="mb-4">
+        <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
+        <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+      </div>
+      <button
+        onClick={handleSend}
+        disabled={loading}
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        {loading ? '...' : 'Send'}
+      </button>
+    </div>
+  </div>
+);
+
 }
 
 export default App;
