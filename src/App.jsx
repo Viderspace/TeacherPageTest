@@ -165,27 +165,6 @@ function App() {
     setLoading(false);
   };
 
-// const publishTutorPrompt = async () => {
-
-//   const promptText = `You are a helpful, efficient, and concise AI tutor. Your goal is to help the student understand the following material:
-
-// ${messages.filter(m => m.role !== 'system' && m.role !== 'assistant').map(m => m.content).join('\n')}
-
-// Adapt your teaching style to the student's needs.`;
-
-// const sessionId = prompt("Give this lesson a short name (e.g., pythagorean):", "latest") || "latest";
-
-//   await fetch('https://teacher-backend-production.up.railway.app/set-tutor-prompt', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ session: sessionId, prompt: promptText })
-//   });
-
-//   const link = `https://viderspace.github.io/StudentPageTest/?session=${encodeURIComponent(sessionId)}`;
-//   alert(`✅ Tutor prompt published!\n\nShare this link with your students:\n${link}`);
-// };
-  // 
-
   const publishTutorPrompt = async () => {
   let sessionId = prompt("Give this lesson a short name (e.g., pythagorean):", "latest");
   if (!sessionId) {
