@@ -143,7 +143,7 @@ function App() {
   const handleSendPDF = async (pdfText) => {
     const newMessages = [
       ...messages,
-      { role: 'user', content: '📄 [Document uploaded]' }  // This shows in chat
+      { role: 'user', content: pdfText }  // This shows in chat
     ];
     setMessages(newMessages);
     setLoading(true);
