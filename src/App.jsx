@@ -1,11 +1,15 @@
 // import * as pdfjsLib from 'pdfjs-dist';
 // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
 
-import * as pdfjsLib from 'pdfjs-dist/build/pdf';
-import 'pdfjs-dist/build/pdf.worker.entry';
+// import * as pdfjsLib from 'pdfjs-dist/build/pdf';
+// import 'pdfjs-dist/build/pdf.worker.entry';
+
+import * as pdfjsLib from 'pdfjs-dist';
+import workerSrc from 'pdfjs-dist/build/pdf.worker.entry';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 import { useState, useEffect } from 'react';
 
