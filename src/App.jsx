@@ -27,6 +27,7 @@ If the teacher is unsure what to include, gently guide them by suggesting possib
 },
     { role: 'assistant', content: 'Hello! What lesson would you like to plan today?' }
   ]);
+  
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
 
