@@ -48,9 +48,10 @@ const handlePDFUpload = async (e) => {
 
 function App() {
   const [messages, setMessages] = useState([
-    { role: "system", 
-  content: `
-  You are a helpful, efficient, and concise assistant for a teacher speaking Hebrew. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
+    {
+      role: "system",
+      content: `
+  You are a helpful, efficient, and concise assistant for a teacher. Your sole goal is to gather lesson material for upcoming classes so you can later help students learn it more effectively.
 
   Your interaction should follow this flow:
   
@@ -182,39 +183,42 @@ Adapt your teaching style to the student's needs.`;
 
   // 
 
-return (
-  <div className="max-w-2xl mx-auto p-6 font-sans">
-    <h1 className="text-2xl font-bold mb-4">👩‍🏫 מורה מלווה</h1>
-    <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
-      <pre className="whitespace-pre-wrap text-left">
-        {messages
-          .filter(m => m.role === 'user' || m.role === 'assistant')
-          .map(m => m.content)
-          .join('\n\n')}
-      </pre>
-    </div>
-    <div className="flex gap-2">
-      <input
-        className="flex-1 border p-2 rounded"
-        value={input}
-        placeholder="Type your message..."
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-      />
-      <div className="mb-4">
-        <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
-        <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+  return (
+    <div className="max-w-2xl mx-auto p-6 font-sans">
+      <h1 className="text-2xl font-bold mb-4">👩‍🏫 מורה מלווה</h1>
+      <div className="h-[400px] overflow-y-auto mb-4 border p-3 rounded bg-white">
+        <pre className="whitespace-pre-wrap text-left">
+          {messages
+            .filter(m => m.role === 'user' || m.role === 'assistant')
+            .map(m => m.content)
+            .join('\n\n')}
+        </pre>
       </div>
-      <button
-        onClick={handleSend}
-        disabled={loading}
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-      >
-        {loading ? '...' : 'Send'}
-      </button>
+      <div className="flex gap-2">
+        <input
+          className="flex-1 border p-2 rounded"
+          value={input}
+          placeholder="Type your message..."
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+        />
+        <div className="mb-4">
+          <label className="block mb-2 font-semibold">📄 Upload PDF Lesson Plan:</label>
+          <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+        </div>
+        <button
+          onClick={handleSend}
+          disabled={loading}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          {loading ? '...' : 'Send'}
+        </button>
+        <button onClick={publishTutorPrompt} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4">
+          Publish Tutor
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
 
 }
 
