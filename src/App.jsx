@@ -111,51 +111,93 @@ Keep responses **short, practical, and easy to scan**. Guide gently if needed.
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 font-sans flex flex-col min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
+<div className="chat-wrapper">
+  <h1>👩‍🏫 AI Teaching Assistant</h1>
 
-      <div className="flex-1 overflow-y-auto mb-4 border p-4 rounded bg-white space-y-4 message-container">
-        {messages.filter(m => m.role !== 'system').map((msg, i) => (
-          <div
-            key={i}
-            className={`max-w-[80%] p-3 rounded-md whitespace-pre-wrap ${
-              msg.role === 'user'
-                ? 'bg-blue-100 ml-auto text-right'
-                : 'bg-gray-100 mr-auto text-left'
-            }`}
-          >
-            <ReactMarkdown>{msg.content}</ReactMarkdown>
-          </div>
-        ))}
-        {loading && (
-          <div className="text-gray-400 italic">Assistant is typing…</div>
-        )}
-        <div ref={messagesEndRef} />
+  <div className="chat-box">
+    {messages.filter(m => m.role !== 'system').map((msg, i) => (
+      <div
+        key={i}
+        className={`message-bubble ${
+          msg.role === 'user' ? 'message-user' : 'message-assistant'
+        }`}
+      >
+        <ReactMarkdown>{msg.content}</ReactMarkdown>
       </div>
+    ))}
+    {loading && (
+      <div className="message-bubble message-assistant">
+        <em>Assistant is typing…</em>
+      </div>
+    )}
+  </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="flex gap-2">
-          <input
-            className="flex-1 border p-2 rounded"
-            value={input}
-            placeholder="Type your message..."
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          />
-          <button
-            onClick={handleSend}
-            disabled={loading}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            {loading ? '...' : 'Send'}
-          </button>
-        </div>
-        <div>
-          <label className="block mb-1 font-semibold">📄 Upload PDF Lesson Plan:</label>
-          <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
-        </div>
-      </div>
+  <div className="input-area">
+    <div className="input-row">
+      <input
+        type="text"
+        value={input}
+        placeholder="Type your message..."
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+      />
+      <button onClick={handleSend} disabled={loading}>
+        {loading ? '...' : 'Send'}
+      </button>
     </div>
+    <label>
+      📄 Upload PDF Lesson Plan:
+      <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+    </label>
+  </div>
+</div>
+
+
+    // <div className="max-w-2xl mx-auto p-6 font-sans flex flex-col min-h-screen">
+    //   <h1 className="text-2xl font-bold mb-4">👩‍🏫 AI Teaching Assistant</h1>
+
+    //   <div className="flex-1 overflow-y-auto mb-4 border p-4 rounded bg-white space-y-4 message-container">
+    //     {messages.filter(m => m.role !== 'system').map((msg, i) => (
+    //       <div
+    //         key={i}
+    //         className={`max-w-[80%] p-3 rounded-md whitespace-pre-wrap ${
+    //           msg.role === 'user'
+    //             ? 'bg-blue-100 ml-auto text-right'
+    //             : 'bg-gray-100 mr-auto text-left'
+    //         }`}
+    //       >
+    //         <ReactMarkdown>{msg.content}</ReactMarkdown>
+    //       </div>
+    //     ))}
+    //     {loading && (
+    //       <div className="text-gray-400 italic">Assistant is typing…</div>
+    //     )}
+    //     <div ref={messagesEndRef} />
+    //   </div>
+
+    //   <div className="flex flex-col gap-3">
+    //     <div className="flex gap-2">
+    //       <input
+    //         className="flex-1 border p-2 rounded"
+    //         value={input}
+    //         placeholder="Type your message..."
+    //         onChange={(e) => setInput(e.target.value)}
+    //         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+    //       />
+    //       <button
+    //         onClick={handleSend}
+    //         disabled={loading}
+    //         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+    //       >
+    //         {loading ? '...' : 'Send'}
+    //       </button>
+    //     </div>
+    //     <div>
+    //       <label className="block mb-1 font-semibold">📄 Upload PDF Lesson Plan:</label>
+    //       <input type="file" accept="application/pdf" onChange={handlePDFUpload} />
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 
